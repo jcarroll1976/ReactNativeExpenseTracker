@@ -17,8 +17,20 @@ export default function ManageExpense({route, navigation}) {
 
     }
 
+    const cancelHandler = () => {
+
+    }
+
+    const confirmHandler = () => {
+
+    }
+
     return (
         <View style={styles.container}>
+            <View style={styles.buttonContainer}>
+                <Button mode = "flat"onPress={cancelHandler}>Cancel</Button>
+                <Button onPress={confirmHandler}>{isEditing ? "Update" : "Add"}</Button>
+            </View>
             {isEditing && (
                 <View style={styles.deleteContainer}>
                     <IconButton icon="trash" color={GlobalStyles.colors.error500} size={36} onPress={deleteExpenseHandler} />
@@ -33,6 +45,9 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 24,
         backgroundColor: GlobalStyles.colors.primary800
+    },
+    buttonContainer: {
+        flexDirection: "row"
     },
     deleteContainer: {
         marginTop: 16,
