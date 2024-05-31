@@ -4,6 +4,7 @@ import { useState } from "react";
 import Input from "./Input";
 import Button from "../UI/Button";
 import getFormattedDate from "../../util/date";
+import { GlobalStyles } from "../../constants/styles";
 
 
 export default function ExpenseForm({submitButtonLabel, onCancel, onSubmit, defaultValues}) {
@@ -69,26 +70,26 @@ export default function ExpenseForm({submitButtonLabel, onCancel, onSubmit, defa
         <View style={styles.form}>
             <Text style={styles.title}>Your Expense</Text>
             <View style={styles.inputsRow}>
-                <Input style={styles.rowInput} label="Amount" textInputConfig={{
+                <Input style={styles.rowInput} label="Amount" invalid={!inputs.amount.isValid} textInputConfig={{
                     keyboardType: "decimal-pad",
                     onChangeText: inputChangedHandler.bind(this, "amount"),
                     value: inputs.amount.value
                 }} />
-                <Input style={styles.rowInput} label="Date" textInputConfig={{
+                <Input style={styles.rowInput} label="Date" invalid={!inputs.date.isValid} textInputConfig={{
                     placeholder: "YYYY-MM-DD",
                     maxLength: 10,
                     onChangeText: inputChangedHandler.bind(this, "date"),
                     value: inputs.date.value
                 }} />
             </View>
-            <Input label="Description" textInputConfig={{
+            <Input label="Description" invalid={!inputs.description.isValid} textInputConfig={{
                 multiline: true,
                 //autoCorrect: false //default is true
                 //autoCapitalize: "sentences" //(default)
                 onChangeText: inputChangedHandler.bind(this, "description"),
                 value: inputs.description.value
             }} />
-            {formIsInvalid && <Text>Invalid values - please check your entered data!</Text>}
+            {formIsInvalid && <Text style={styles.errorText}>Invalid values - please check your entered data!</Text>}
             <View style={styles.buttonContainer}>
                 <Button style={styles.button} mode = "flat"onPress={onCancel}>Cancel</Button>
                 <Button style={styles.button} onPress={submitHandler}>{submitButtonLabel}</Button>
@@ -114,6 +115,11 @@ const styles = StyleSheet.create({
     },
     rowInput: {
         flex: 1
+    },
+    errorText: {
+        textAlign: "center",
+        color: GlobalStyles.colors.error500,
+        margin: 8
     },
     buttonContainer: {
         flexDirection: "row",
