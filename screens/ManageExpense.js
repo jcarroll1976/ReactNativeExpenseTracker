@@ -29,12 +29,12 @@ export default function ManageExpense({route, navigation}) {
         navigation.goBack();
     }
 
-    const confirmHandler = (expenseData) => {
+    const confirmHandler = async (expenseData) => {
         if (isEditing) {
             expensesCtx.updateExpense(editedExpenseId, expenseData);
           } else {
-            storeExpenses(expenseData);
-            expensesCtx.addExpense(expenseData);
+            const id = storeExpenses(expenseData);
+            expensesCtx.addExpense({...expenseData, id: id});
           }
         navigation.goBack();
     }
